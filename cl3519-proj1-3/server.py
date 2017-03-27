@@ -165,16 +165,7 @@ def index():
 # The functions for each app.route need to have different names
 #
 
-# Example of adding new data to the database
-#@app.route('/add', methods=['POST'])
-#def add():
-#  name = request.form['name']
-#  command = "INSERT INTO test(name) VALUES ('"
-#  command += name
-#  command += "')"
-#  g.conn.execute(command)
-#  return redirect('/')
-
+# SQL#1: List all the address of the restaurant
 @app.route('/listAddressRestaurant')
 def listAdressRestaurant():
   names = []
@@ -185,10 +176,10 @@ def listAdressRestaurant():
 def doListAddressRestaurant():
   restaurant = request.form['restaurant']
 
-  # SQL querying for addresses given restaurant
-  command = "select address from restaurant R WHERE R.rname='"
-  command += restaurant
-  command += "'"
+  # SQL command
+  command = "select address "
+  command += "FROM restaurant R "
+  command += "WHERE R.rname='" + restaurant + "'"
 
   cursor = g.conn.execute(command)
   addrs = []
@@ -197,6 +188,34 @@ def doListAddressRestaurant():
   cursor.close()
   context = dict(data = addrs)
   return render_template("listAddressRestaurant.html", **context)
+
+# SQL#2: List the restaurants with the specific number of stars (rating) around me
+@app.route('/listRestaurantStarAroundMe')
+def listRestaurantStarAroundMe():
+  names = []
+  context = dict(data = names)
+  return render_template("listRestaurantStarAroundMe.html", **context)
+
+@app.route('/doListRestaurantStarAroundMe', methods=['POST'])
+def doListRestaurantStarAroundMe():
+  uid = request.form['uid']
+  rating = request.form['rating']
+
+  # SQL command
+  command = "SELECT R.rname "
+  command += "FROM restaurant R, restaurant_user U "
+  command += "WHERE U.uid='" + uid + "' AND "
+  command += "R.rating>'" + rating + "' AND "
+  command += "ABS(R.rlat - U.ulat) < 0.005 AND "
+  command += "ABS(R.rlng - U.ulng) < 0.005"
+
+  cursor = g.conn.execute(command)
+  restaurants = []
+  for result in cursor:
+    restaurants.append(result['rname'])
+  cursor.close()
+  context = dict(data = restaurants)
+  return render_template("listRestaurantStarAroundMe.html", **context)
 
 @app.route('/login')
 def login():
