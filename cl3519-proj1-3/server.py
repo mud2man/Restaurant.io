@@ -46,12 +46,12 @@ engine = create_engine(DATABASEURI)
 # Example of running queries in your database
 # Note that this will probably not work if you already have a table named 'test' in your database, containing meaningful data. This is only an example showing you how to run queries in your database using SQLAlchemy.
 #
-engine.execute("""CREATE TABLE IF NOT EXISTS test (
-  id serial,
-  name text
-);""")
-engine.execute("""INSERT INTO test(name) VALUES ('grace hopper'), ('alan turing'), ('ada lovelace');""")
 
+#engine.execute("""CREATE TABLE IF NOT EXISTS test (
+#  id serial,
+#  name text
+#);""")
+#engine.execute("""INSERT INTO test(name) VALUES ('grace hopper'), ('alan turing'), ('ada lovelace');""")
 
 @app.before_request
 def before_request():
@@ -95,6 +95,7 @@ def teardown_request(exception):
 # see for decorators: http://simeonfranklin.com/blog/2012/jul/1/python-decorators-in-12-steps/
 #
 @app.route('/')
+@app.route('/index')
 def index():
   """
   request is a special object that Flask provides to access web request information:
@@ -113,11 +114,12 @@ def index():
   #
   # example of a database query
   #
-  cursor = g.conn.execute("SELECT name FROM test")
-  names = []
-  for result in cursor:
-    names.append(result['name'])  # can also be accessed using result[0]
-  cursor.close()
+  
+  #cursor = g.conn.execute("SELECT name FROM test")
+  #names = []
+  #for result in cursor:
+  #  names.append(result['name'])  # can also be accessed using result[0]
+  #cursor.close()
 
   #
   # Flask uses Jinja templates, which is an extension to HTML where you can
@@ -145,13 +147,14 @@ def index():
   #     <div>{{n}}</div>
   #     {% endfor %}
   #
-  context = dict(data = names)
+  #context = dict(data = names)
 
   #
   # render_template looks in the templates/ folder for files.
   # for example, the below file reads template/index.html
   #
-  return render_template("index.html", **context)
+  #return render_template("index.html", **context)
+  return render_template("index.html")
 
 #
 # This is an example of a different path.  You can see it at:
@@ -161,21 +164,39 @@ def index():
 # Notice that the function name is another() rather than index()
 # The functions for each app.route need to have different names
 #
-@app.route('/another')
-def another():
-  return render_template("another.html")
-
 
 # Example of adding new data to the database
-@app.route('/add', methods=['POST'])
-def add():
-  name = request.form['name']
-  command = "INSERT INTO test(name) VALUES ('"
-  command += name
-  command += "')"
-  g.conn.execute(command)
-  return redirect('/')
+#@app.route('/add', methods=['POST'])
+#def add():
+#  name = request.form['name']
+#  command = "INSERT INTO test(name) VALUES ('"
+#  command += name
+#  command += "')"
+#  g.conn.execute(command)
+#  return redirect('/')
 
+@app.route('/listAddressRestaurant')
+def listAdressRestaurant():
+  names = []
+  context = dict(data = names)
+  return render_template("listAddressRestaurant.html", **context)
+
+@app.route('/doListAddressRestaurant', methods=['POST'])
+def doListAddressRestaurant():
+  restaurant = request.form['restaurant']
+
+  # SQL querying for addresses given restaurant
+  command = "select address from restaurant R WHERE R.rname='"
+  command += restaurant
+  command += "'"
+
+  cursor = g.conn.execute(command)
+  addrs = []
+  for result in cursor:
+    addrs.append(result['address'])  # can also be accessed using result[0]
+  cursor.close()
+  context = dict(data = addrs)
+  return render_template("listAddressRestaurant.html", **context)
 
 @app.route('/login')
 def login():
