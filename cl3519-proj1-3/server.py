@@ -20,6 +20,8 @@ from sqlalchemy.pool import NullPool
 from flask import Flask, request, render_template, g, redirect, Response
 
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+print tmpl_dir 
+print __name__ 
 app = Flask(__name__, template_folder=tmpl_dir)
 
 
@@ -147,7 +149,6 @@ def index():
   #
   context = dict(data = names)
 
-
   #
   # render_template looks in the templates/ folder for files.
   # for example, the below file reads template/index.html
@@ -171,7 +172,10 @@ def another():
 @app.route('/add', methods=['POST'])
 def add():
   name = request.form['name']
-  g.conn.execute('INSERT INTO test VALUES (NULL, ?)', name)
+  command = "INSERT INTO test(name) VALUES ('"
+  command += name
+  command += "')"
+  g.conn.execute(command)
   return redirect('/')
 
 
