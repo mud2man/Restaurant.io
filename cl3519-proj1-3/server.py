@@ -165,7 +165,7 @@ def index():
 # The functions for each app.route need to have different names
 #
 
-# SQL#1: List all the address of the restaurant
+####### SQL#1: List all the address of the restaurant ######
 @app.route('/listAddressRestaurant')
 def listAdressRestaurant():
   names = []
@@ -189,7 +189,7 @@ def doListAddressRestaurant():
   context = dict(data = addrs)
   return render_template("listAddressRestaurant.html", **context)
 
-# SQL#2: List the restaurants with the specific number of stars (rating) around me
+###### SQL#2: List the restaurants with the specific number of stars (rating) around me ######
 @app.route('/listRestaurantStarAroundMe')
 def listRestaurantStarAroundMe():
   names = []
@@ -216,6 +216,37 @@ def doListRestaurantStarAroundMe():
   cursor.close()
   context = dict(data = restaurants)
   return render_template("listRestaurantStarAroundMe.html", **context)
+
+###### SQL#3: How many and what restaurants around me opened now  ######
+@app.route('/listRestaurantAroundMeAndOpen')
+def listRestaurantAroundMeAndOpen():
+  names = []
+  context = dict(data = names)
+  return render_template("listRestaurantAroundMeAndOpen.html", **context)
+
+@app.route('/doListRestaurantAroundMeAndOpen', methods=['POST'])
+def doListRestaurantAroundMeAndOpen():
+  uid = request.form['uid']
+  day = request.form['day']
+  time = request.form['time']
+  tid = 2*int(day) + int(time) - 1
+
+  # SQL command
+  command = "SELECT R.rname "
+  command += "FROM restaurant R, restaurant_user U, is_open_during I "
+  command += "WHERE U.uid='" + uid + "' AND "
+  command += "ABS(R.rlat - U.ulat) < 0.005 AND "
+  command += "ABS(R.rlng - U.ulng) < 0.005 AND "
+  command += "R.rid = I.rid AND "
+  command += "I.tid = '" + str(tid) + "'"
+
+  cursor = g.conn.execute(command)
+  restaurants = []
+  for result in cursor:
+    restaurants.append(result['rname'])
+  cursor.close()
+  context = dict(data = restaurants)
+  return render_template("listRestaurantAroundMeAndOpen.html", **context)
 
 @app.route('/login')
 def login():
