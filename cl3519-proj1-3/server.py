@@ -248,6 +248,34 @@ def doListRestaurantAroundMeAndOpen():
   context = dict(data = restaurants)
   return render_template("listRestaurantAroundMeAndOpen.html", **context)
 
+###### SQL#4: List restaurants with cost under $10 around me ######
+@app.route('/listRestaurantCostAroundMe')
+def listRestaurantCostAroundMe():
+  names = []
+  context = dict(data = names)
+  return render_template("listRestaurantCostAroundMe.html", **context)
+
+@app.route('/doListRestaurantCostAroundMe', methods=['POST'])
+def doListRestaurantCostAroundMe():
+  uid = request.form['uid']
+  cost = request.form['cost']
+
+  # SQL command
+  command = "SELECT R.rname "
+  command += "FROM restaurant R, restaurant_user U "
+  command += "WHERE U.uid='" + uid + "' AND "
+  command += "R.cost<'" + cost + "' AND "
+  command += "ABS(R.rlat - U.ulat) < 0.005 AND "
+  command += "ABS(R.rlng - U.ulng) < 0.005"
+
+  cursor = g.conn.execute(command)
+  restaurants = []
+  for result in cursor:
+    restaurants.append(result['rname'])
+  cursor.close()
+  context = dict(data = restaurants)
+  return render_template("listRestaurantCostAroundMe.html", **context)
+
 @app.route('/login')
 def login():
     abort(401)
