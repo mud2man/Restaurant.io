@@ -302,6 +302,35 @@ def doListRestaurantAroundSubway():
   context = dict(data = restaurants)
   return render_template("listRestaurantAroundSubway.html", **context)
 
+####### SQL#6: List my favorite restaurants around me ######
+@app.route('/listFavoriteRestaurantAroundMe')
+def listFavoriteRestaurantAroundMe():
+  names = []
+  context = dict(data = names)
+  return render_template("listFavoriteRestaurantAroundMe.html", **context)
+
+@app.route('/doListFavoriteRestaurantAroundMe', methods=['POST'])
+def doListFavoriteRestaurantAroundMe():
+  uid = request.form['uid']
+
+  # SQL command
+  command = "SELECT R.rname "
+  command += "FROM restaurant R, restaurant_user U, is_favorite S, have H "
+  command += "WHERE U.uid='" + uid + "' AND "
+  command += "S.uid=U.uid AND "
+  command += "S.hid=H.hid AND "
+  command += "H.rid=R.rid AND "
+  command += "ABS(R.rlat - U.ulat) < 0.005 AND "
+  command += "ABS(R.rlng - U.ulng) < 0.005"
+
+  cursor = g.conn.execute(command)
+  restaurants = []
+  for result in cursor:
+    restaurants.append(result['rname'])
+  cursor.close()
+  context = dict(data = restaurants)
+  return render_template("listFavoriteRestaurantAroundMe.html", **context)
+
 @app.route('/login')
 def login():
     abort(401)

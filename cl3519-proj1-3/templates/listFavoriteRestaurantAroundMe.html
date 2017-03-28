@@ -1,0 +1,29 @@
+<html>
+  <style>
+    body{ 
+      font-size: 15pt;
+      font-family: arial;
+    }
+  </style>
+
+
+<body>
+  <h1>My favorite restaurants around me</h1>
+  <div>
+    {% for n in data %}
+    <div>{{n}}</div>
+    {% endfor %}
+  </div>
+
+<p><a href="index">Go to home page</a></p>
+<form method="POST" action="/doListFavoriteRestaurantAroundMe">
+  <p>Uid:<br>
+      <input type="text" name="uid"> <br>
+    <input type="submit" value="Enter">
+  </p>
+</form>
+
+</body>
+
+
+</html>
