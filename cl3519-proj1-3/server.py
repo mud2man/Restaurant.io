@@ -248,7 +248,7 @@ def doListRestaurantAroundMeAndOpen():
   context = dict(data = restaurants)
   return render_template("listRestaurantAroundMeAndOpen.html", **context)
 
-###### SQL#4: List restaurants with cost under $10 around me ######
+###### SQL#4: List restaurants with cost under $XX around me ######
 @app.route('/listRestaurantCostAroundMe')
 def listRestaurantCostAroundMe():
   names = []
@@ -353,7 +353,6 @@ def doListRestaurantFoodAroundMe():
   command += "ABS(R.rlat - U.ulat) < 0.005 AND "
   command += "ABS(R.rlng - U.ulng) < 0.005"
 
-  print command
   cursor = g.conn.execute(command)
   restaurants = []
   for result in cursor:
@@ -361,6 +360,33 @@ def doListRestaurantFoodAroundMe():
   cursor.close()
   context = dict(data = restaurants)
   return render_template("listRestaurantFoodAroundMe.html", **context)
+
+###### SQL#8: List restaurants available for pick-up around me ######
+@app.route('/listRestaurantPickupAroundMe')
+def listRestaurantPickupAroundMe():
+  names = []
+  context = dict(data = names)
+  return render_template("listRestaurantPickupAroundMe.html", **context)
+
+@app.route('/doListRestaurantPickupAroundMe', methods=['POST'])
+def doListRestaurantPickupAroundMe():
+  uid = request.form['uid']
+
+  # SQL command
+  command = "SELECT R.rname "
+  command += "FROM restaurant R, restaurant_user U "
+  command += "WHERE U.uid='" + uid + "' AND "
+  command += "R.pickup = '1' AND "
+  command += "ABS(R.rlat - U.ulat) < 0.005 AND "
+  command += "ABS(R.rlng - U.ulng) < 0.005"
+
+  cursor = g.conn.execute(command)
+  restaurants = []
+  for result in cursor:
+    restaurants.append(result['rname'])
+  cursor.close()
+  context = dict(data = restaurants)
+  return render_template("listRestaurantPickupAroundMe.html", **context)
 
 @app.route('/login')
 def login():
