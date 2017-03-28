@@ -276,6 +276,32 @@ def doListRestaurantCostAroundMe():
   context = dict(data = restaurants)
   return render_template("listRestaurantCostAroundMe.html", **context)
 
+####### SQL#5: List the restaurants nearby the subway station ######
+@app.route('/listRestaurantAroundSubway')
+def listRestaurantAroundSubway():
+  names = []
+  context = dict(data = names)
+  return render_template("listRestaurantAroundSubway.html", **context)
+
+@app.route('/doListRestaurantAroundSubway', methods=['POST'])
+def doListRestaurantAroundSubway():
+  sid = request.form['sid']
+
+  # SQL command
+  command = "SELECT R.rname "
+  command += "FROM restaurant R, subway_station S "
+  command += "WHERE S.sid='" + sid + "' AND "
+  command += "ABS(R.rlat - S.slat) < 0.005 AND "
+  command += "ABS(R.rlng - S.slng) < 0.005"
+
+  cursor = g.conn.execute(command)
+  restaurants = []
+  for result in cursor:
+    restaurants.append(result['rname'])
+  cursor.close()
+  context = dict(data = restaurants)
+  return render_template("listRestaurantAroundSubway.html", **context)
+
 @app.route('/login')
 def login():
     abort(401)
