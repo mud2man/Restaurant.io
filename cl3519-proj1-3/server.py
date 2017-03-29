@@ -22,7 +22,22 @@ from flask import Flask, request, render_template, g, redirect, Response
 tmpl_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
 app = Flask(__name__, template_folder=tmpl_dir)
 
+#
+# Utilities
+#
+def isInt(s):
+  try:
+    int(s)
+    return True
+  except ValueError:
+    return False
 
+def isFloat(s):
+  try:
+    float(s)
+    return True
+  except ValueError:
+    return False
 #
 # The following is a dummy URI that does not connect to a valid database. You will need to modify it to connect to your Part 2 database in order to use the data.
 #
@@ -201,6 +216,12 @@ def doListRestaurantStarAroundMe():
   uid = request.form['uid']
   rating = request.form['rating']
 
+  # Validate uid and rating
+  if isInt(uid) == False or isInt(rating) == False:
+    names = []
+    context = dict(data = names)
+    return render_template("listRestaurantStarAroundMe.html", **context)
+    
   # SQL command
   command = "SELECT R.rname "
   command += "FROM restaurant R, restaurant_user U "
@@ -229,8 +250,20 @@ def doListRestaurantAroundMeAndOpen():
   uid = request.form['uid']
   day = request.form['day']
   time = request.form['time']
-  tid = 2*int(day) + int(time) - 1
 
+  # Validate uid, day, time and tid
+  if isInt(uid) == False or isInt(day) == False or isInt(time) == False:
+    names = []
+    context = dict(data = names)
+    return render_template("listRestaurantAroundMeAndOpen.html", **context)
+   
+  if (int(day) not in range(1, 7)) or (int(time) not in range(0, 1)):
+    names = []
+    context = dict(data = names)
+    return render_template("listRestaurantAroundMeAndOpen.html", **context)
+    
+  tid = 2*int(day) + int(time) - 1
+  
   # SQL command
   command = "SELECT R.rname "
   command += "FROM restaurant R, restaurant_user U, is_open_during I "
@@ -259,6 +292,12 @@ def listRestaurantCostAroundMe():
 def doListRestaurantCostAroundMe():
   uid = request.form['uid']
   cost = request.form['cost']
+  
+  # Validate uid and cost
+  if isInt(uid) == False or isFloat(cost) == False:
+    names = []
+    context = dict(data = names)
+    return render_template("listRestaurantCostAroundMe.html", **context)
 
   # SQL command
   command = "SELECT R.rname "
@@ -287,6 +326,12 @@ def listRestaurantAroundSubway():
 def doListRestaurantAroundSubway():
   sid = request.form['sid']
 
+  # Validate sid
+  if isInt(sid) == False:
+    names = []
+    context = dict(data = names)
+    return render_template("listRestaurantAroundSubway.html", **context)
+
   # SQL command
   command = "SELECT R.rname "
   command += "FROM restaurant R, subway_station S "
@@ -312,6 +357,12 @@ def listFavoriteRestaurantAroundMe():
 @app.route('/doListFavoriteRestaurantAroundMe', methods=['POST'])
 def doListFavoriteRestaurantAroundMe():
   uid = request.form['uid']
+
+  # Validate uid
+  if isInt(uid) == False:
+    names = []
+    context = dict(data = names)
+    return render_template("listFavoriteRestaurantAroundMe.html", **context)
 
   # SQL command
   command = "SELECT R.rname "
@@ -343,6 +394,12 @@ def doListRestaurantFoodAroundMe():
   uid = request.form['uid']
   fid = request.form['fid']
 
+  # Validate uid and fid
+  if isInt(uid) == False or isInt(fid) == False:
+    names = []
+    context = dict(data = names)
+    return render_template("listRestaurantFoodAroundMe.html", **context)
+
   # SQL command
   command = "SELECT R.rname "
   command += "FROM restaurant R, restaurant_user U, have H, food F "
@@ -371,6 +428,12 @@ def listRestaurantPickupAroundMe():
 @app.route('/doListRestaurantPickupAroundMe', methods=['POST'])
 def doListRestaurantPickupAroundMe():
   uid = request.form['uid']
+
+  # Validate uid
+  if isInt(uid) == False:
+    names = []
+    context = dict(data = names)
+    return render_template("listRestaurantPickupAroundMe.html", **context)
 
   # SQL command
   command = "SELECT R.rname "
