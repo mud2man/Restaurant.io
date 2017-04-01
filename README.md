@@ -1,4 +1,7 @@
 # Restaurant.io
+This is a web application that utilizes local restaurant information near Columbia University
+
+## Project Information
 - Postgre SQL account: cl3519 
 - URL of web application: (http://35.185.39.44:8111/)
 - The application achieves all of the functions mentioned in Part 1, such as: 
