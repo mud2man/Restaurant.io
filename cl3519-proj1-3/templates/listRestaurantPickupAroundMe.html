@@ -7,6 +7,19 @@
   </style>
 
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+</script>
+
+<script type = "text/javascript">
+
+function id_input(id){
+  document.getElementById("id_result").value=id;}
+
+  function fid_input(fid){
+  document.getElementById("fid_result").value=fid;}
+
+</script>
+
 <body>
   <h1>The restaurants available for pick-up around me</h1>
   <div>
@@ -18,9 +31,20 @@
 <p><a href="index">Go to home page</a></p>
 <form method="POST" action="/doListRestaurantPickupAroundMe">
   <p>
-    User ID:<br>
-      <input type="text" name="uid"> <br>
-    <input type="submit" value="Enter">
+    User ID (we currently do not have login feature, so pick your name which will correspond to your actual id):<br>
+      <input type="button" value="Jordan" name="1" onclick="id_input(this.name)"> 
+      <input type="button" value="Min" name="2" onclick="id_input(this.name)">  
+      <input type="button" value="Namo" name="3" onclick="id_input(this.name)"> 
+      <input type="button" value="Alex" name="4" onclick="id_input(this.name)">
+      <input type="button" value="John" name="5" onclick="id_input(this.name)"> 
+      <input type="button" value="Jason" name="6" onclick="id_input(this.name)"> 
+      <input type="button" value="Joanna" name="7" onclick="id_input(this.name)">  
+      <input type="button" value="Elsie" name="8" onclick="id_input(this.name)"> 
+      <input type="button" value="ARod" name="9" onclick="id_input(this.name)">
+      <input type="button" value="Michael" name="10" onclick="id_input(this.name)"> <br>
+      <input type="text" name="uid" id="id_result"> <br><br>
+
+    <input type="submit" value="Enter" style="width:100px; height:50px;">
   </p>
 </form>
 
