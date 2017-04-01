@@ -6,9 +6,24 @@
     }
   </style>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+</script>
+
+<script type = "text/javascript">
+
+function id_input(id){
+  document.getElementById("id_result").value=id;}
+
+function day_input(day){
+  document.getElementById("day_result").value=day;}
+
+function time_input(time){
+  document.getElementById("time_result").value=time;}
+
+</script>
 
 <body>
-  <h1>The opend restaurants around me</h1>
+  <h1>The opened restaurants around me</h1>
   <div>
     {% for n in data %}
     {% if loop.index == 1 %}
@@ -21,13 +36,35 @@
 <p><a href="index">Go to home page</a></p>
 <form method="POST" action="/doListRestaurantAroundMeAndOpen">
   <p>
-    User ID:<br>
-      <input type="text" name="uid"> <br>
-    Days(ex: 1 = Monday, 2 = Tuesday,...etc):<br>
-      <input type="text" name="day"> <br>
-    Time(ex: 0 = lunch , 1 = dinner):<br>
-      <input type="text" name="time"> <br>
-    <input type="submit" value="Enter">
+    User ID (we currently do not have login feature, so pick your name which will correspond to your actual id):<br>
+      <input type="button" value="Jordan" name="1" onclick="id_input(this.name)"> 
+      <input type="button" value="Min" name="2" onclick="id_input(this.name)">  
+      <input type="button" value="Namo" name="3" onclick="id_input(this.name)"> 
+      <input type="button" value="Alex" name="4" onclick="id_input(this.name)">
+      <input type="button" value="John" name="5" onclick="id_input(this.name)"> 
+      <input type="button" value="Jason" name="6" onclick="id_input(this.name)"> 
+      <input type="button" value="Joanna" name="7" onclick="id_input(this.name)">  
+      <input type="button" value="Elsie" name="8" onclick="id_input(this.name)"> 
+      <input type="button" value="ARod" name="9" onclick="id_input(this.name)">
+      <input type="button" value="Michael" name="10" onclick="id_input(this.name)"> <br>
+      <input type="text" name="uid" id="id_result"> <br><br>
+
+    What day of the week is it right now?:<br>
+      <input type="button" value="Monday" name="1" onclick="day_input(this.name)"> 
+      <input type="button" value="Tuesday" name="2" onclick="day_input(this.name)">  
+      <input type="button" value="Wednesday" name="3" onclick="day_input(this.name)"> 
+      <input type="button" value="Thursday" name="4" onclick="day_input(this.name)">
+      <input type="button" value="Friday" name="5" onclick="day_input(this.name)"> 
+      <input type="button" value="Saturday" name="6" onclick="day_input(this.name)"> 
+      <input type="button" value="Sunday" name="7" onclick="day_input(this.name)"> <br>
+      <input type="text" name="day" id="day_result"> <br><br>
+
+    What is the time period?:<br>
+      <input type="button" value="Lunch" name="0" onclick="time_input(this.name)"> 
+      <input type="button" value="Dinner" name="1" onclick="time_input(this.name)"> <br>
+      <input type="text" name="time" id="time_result"> <br><br>
+
+    <input type="submit" value="Enter" style="width:100px; height:50px;">
   </p>
 </form>
 
