@@ -26,17 +26,7 @@ function input(name){
 
 <form method="POST" action="/doListAddressRestaurant">
   <p>
-      Please enter name of restaurant:<br>
-
-      <input type="text" name="restaurant"> 
-      <input type="submit" value="Enter">
-    </p>
-</form>
-
-
-<form method="POST" action="/doListAddressRestaurant">
-  <p>
-      Or please select one of the restaurants from the below:<br>
+      Please choose or enter the name of restaurant:<br>
         <input type="button" value="Sweetgreen" name="1" onclick="input(this.value)"> 
         <input type="button" value="Chipotle" name="2" onclick="input(this.value)">  
         <input type="button" value="Pisticci" name="3" onclick="input(this.value)"> 
@@ -47,9 +37,8 @@ function input(name){
         <input type="button" value="Koko Wings" name="8" onclick="input(this.value)">
         <input type="button" value="Mel’s Burger Bar" name="9" onclick="input(this.value)"> 
         <input type="button" value="Tom’s" name="10" onclick="input(this.value)"> <br> 
-
-        <input type="text" name="restaurant" id="result">
-        <input type="submit" value="Enter">
+        <input type="text" name="restaurant" id="result"> <br> <br>
+        <input type="submit" value="Enter" style="width:100px; height:50px;">
     </form>
 
 </body>
