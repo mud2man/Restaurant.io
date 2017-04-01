@@ -452,12 +452,12 @@ def doListRestaurantPickupAroundMe():
   return render_template("listRestaurantPickupAroundMe.html", **context)
 
 
-###### Test Page for ######
-@app.route('/test')
-def test():
-  names = []
-  context = dict(data = names)
-  return render_template("test.html", **context)
+# ###### Test Page for ######
+# @app.route('/test')
+# def test():
+#   names = []
+#   context = dict(data = names)
+#   return render_template("test.html", **context)
 
 
 @app.route('/login')
