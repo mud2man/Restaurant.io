@@ -6,6 +6,13 @@
     }
   </style>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+</script>
+
+<script type = "text/javascript">
+function input(name){
+  document.getElementById("result").value=name;}
+</script>
 
 <body>
   <h1>The address of this restaurant</h1>
@@ -16,15 +23,35 @@
   </div>
 
 <p><a href="index">Go to home page</a></p>
+
 <form method="POST" action="/doListAddressRestaurant">
   <p>
-     The name of restaurant:<br> 
+      Please enter name of restaurant:<br>
+
       <input type="text" name="restaurant"> 
-    <input type="submit" value="Enter">
-  </p>
+      <input type="submit" value="Enter">
+    </p>
 </form>
 
-</body>
 
+<form method="POST" action="/doListAddressRestaurant">
+  <p>
+      Or please select one of the restaurants from the below:<br>
+        <input type="button" value="Sweetgreen" name="1" onclick="input(this.value)"> 
+        <input type="button" value="Chipotle" name="2" onclick="input(this.value)">  
+        <input type="button" value="Pisticci" name="3" onclick="input(this.value)"> 
+        <input type="button" value="Five Guys" name="4" onclick="input(this.value)">
+        <input type="button" value="Kitaro Sushi" name="5" onclick="input(this.value)"> 
+        <input type="button" value="Thai Market" name="6" onclick="input(this.value)">
+        <input type="button" value="Bella Luna" name="7" onclick="input(this.value)"> 
+        <input type="button" value="Koko Wings" name="8" onclick="input(this.value)">
+        <input type="button" value="Mel’s Burger Bar" name="9" onclick="input(this.value)"> 
+        <input type="button" value="Tom’s" name="10" onclick="input(this.value)"> <br> 
+
+        <input type="text" name="restaurant" id="result">
+        <input type="submit" value="Enter">
+    </form>
+
+</body>
 
 </html>
