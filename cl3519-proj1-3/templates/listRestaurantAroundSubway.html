@@ -6,6 +6,15 @@
     }
   </style>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js">
+</script>
+
+<script type = "text/javascript">
+
+function sid_input(sid){
+  document.getElementById("sid_result").value=sid;}
+
+</script>
 
 <body>
   <h1>The restaurants around the subway station given station ID</h1>
@@ -18,9 +27,20 @@
 <p><a href="index">Go to home page</a></p>
 <form method="POST" action="/doListRestaurantAroundSubway">
   <p>
-    Station ID:<br>
-      <input type="text" name="sid"> <br>
-    <input type="submit" value="Enter">
+    Choose the Subway Station:<br>
+<input type="button" value="116 St" name="1" onclick="sid_input(this.name)"> 
+      <input type="button" value="110 St" name="2" onclick="sid_input(this.name)">  
+      <input type="button" value="103 St" name="3" onclick="sid_input(this.name)"> 
+      <input type="button" value="96 St" name="4" onclick="sid_input(this.name)">
+      <input type="button" value="86 St" name="5" onclick="sid_input(this.name)"> 
+      <input type="button" value="79 St" name="6" onclick="sid_input(this.name)"> 
+      <input type="button" value="72 St" name="7" onclick="sid_input(this.name)">  
+      <input type="button" value="66 St" name="8" onclick="sid_input(this.name)"> 
+      <input type="button" value="59 St" name="9" onclick="sid_input(this.name)">
+      <input type="button" value="50 St" name="10" onclick="sid_input(this.name)"> <br>
+      <input type="text" name="sid" id="sid_result"> <br><br>
+
+    <input type="submit" value="Enter" style="width:100px; height:50px;">
   </p>
 </form>
 

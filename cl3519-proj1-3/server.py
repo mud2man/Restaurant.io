@@ -407,8 +407,8 @@ def doListRestaurantFoodAroundMe():
   command += "F.fid='" + fid + "' AND "
   command += "F.fid=H.fid AND "
   command += "H.rid=R.rid AND "
-  command += "ABS(R.rlat - U.ulat) < 0.005 AND "
-  command += "ABS(R.rlng - U.ulng) < 0.005"
+  command += "ABS(R.rlat - U.ulat) < 0.01 AND "
+  command += "ABS(R.rlng - U.ulng) < 0.01"
 
   cursor = g.conn.execute(command)
   restaurants = []
@@ -450,6 +450,15 @@ def doListRestaurantPickupAroundMe():
   cursor.close()
   context = dict(data = restaurants)
   return render_template("listRestaurantPickupAroundMe.html", **context)
+
+
+###### Test Page for ######
+@app.route('/test')
+def test():
+  names = []
+  context = dict(data = names)
+  return render_template("test.html", **context)
+
 
 @app.route('/login')
 def login():
