@@ -257,7 +257,7 @@ def doListRestaurantAroundMeAndOpen():
     context = dict(data = names)
     return render_template("listRestaurantAroundMeAndOpen.html", **context)
    
-  if (int(day) not in range(1, 7)) or (int(time) not in range(0, 1)):
+  if (int(day) not in range(1, 8)) or (int(time) not in range(0, 2)):
     names = []
     context = dict(data = names)
     return render_template("listRestaurantAroundMeAndOpen.html", **context)
