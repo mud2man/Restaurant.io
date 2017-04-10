@@ -263,7 +263,7 @@ def doListRestaurantAroundMeAndOpen():
     return render_template("listRestaurantAroundMeAndOpen.html", **context)
     
   tid = 2*int(day) + int(time) - 1
-  
+
   # SQL command
   command = "SELECT R.rname "
   command += "FROM restaurant R, restaurant_user U, is_open_during I "
@@ -279,6 +279,7 @@ def doListRestaurantAroundMeAndOpen():
     restaurants.append(result['rname'])
   cursor.close()
   context = dict(data = restaurants)
+
   return render_template("listRestaurantAroundMeAndOpen.html", **context)
 
 ###### SQL#4: List restaurants with cost under $XX around me ######
