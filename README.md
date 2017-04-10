@@ -28,8 +28,10 @@ Jordan Joonsang Park (jjp2181)
 
 - The two most interesting functions are: 
 	
-	_#2: List restaurants higher than the given rating and around me_
+	__#2: List restaurants higher than the given rating and around me__
+
 	This function utilizes two inputs: the user id and minimum rating. The user id is chosen from the selective pool of database, since we do not have login feature. The minimum rating can be chosen as a number from 1 to 5 or an input into the textbox. These will search for corresponding restaruants given the location of the user. Currently, the query to estimate nearness is set as 0.005 difference in the langitudes and longitudes.   
     
-    _#3: How many and what restaurants around me opened now_
+    __#3: How many and what restaurants around me opened now__
+
     This function utilizes three inputs: the user id, day of the week, and timeslot (lunch or dinner). Originally, from Part 1 meeting and planning phrase, this function has been somewhat vague, due to the intermix of day of the week and timeslot (which was decided to be represented as a bit 0 or 1). However, on the front-end, there is no confusion because the user can just select the time on button.
